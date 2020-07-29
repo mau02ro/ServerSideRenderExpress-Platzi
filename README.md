@@ -215,7 +215,7 @@ _Este paquete hoy (20 de julio de 2020) tienen problemas con file-loader@6, ajus
 
 ### Hidratar el state inicial Redux
 
-Primero debemos obtener el state de store creado en el server, para inyectar en el html el initialState de la aplicación, ver [Redux server side rendering](https://redux.js.org/recipes/server-rendering)
+Primero debemos obtener el state de store creado en el server, para inyectar en el html el **initialState** de la aplicación, ver [Redux server side rendering](https://redux.js.org/recipes/server-rendering)
 
 ```
 const setResponse = (html, preloadedState) => {
@@ -279,7 +279,7 @@ ReactDOM.hydrate(
 
 ### Seguridad
 
-Si vamos a la consola y colocamos window.\_**\_PRELOADED_STATE\_\_** podemos acceder a el estado de la aplicación y esto es un hueco de seguridad, para solucionarlo es muy sencillo después de definir el preloadedState y el store lo único que debemos hacer es un delete del window.\_**\_PRELOADED_STATE\_\_**
+Si vamos a la consola y colocamos **window.\_\_PRELOADED_STATE\_\_** podemos acceder a el estado de la aplicación y esto es un hueco de seguridad, para solucionarlo es muy sencillo después de definir el **preloadedState** y el **store** lo único que debemos hacer es un delete del **window.\_\_PRELOADED_STATE\_\_**
 
 ```
 const preloadedState = window.__PRELOADED_STATE__;
