@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open --mode development",
-    "start:server": "json-server initialState.json"
+    "start:server": "json-server initialState.json",
+    "start:dev": "node src/server/index"
   },
   "repository": {
     "type": "git",
@@ -19,13 +20,16 @@
   },
   "homepage": "https://github.com/mau02ro/cursoPractico-reactjs#readme",
   "dependencies": {
+    "@babel/register": "^7.10.5",
     "babel-eslint": "^10.1.0",
     "classnames": "^2.2.6",
+    "dotenv": "^8.2.0",
     "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
+    "express": "^4.17.1",
     "md5": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
