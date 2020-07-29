@@ -217,3 +217,87 @@ require("asset-require-hook")({
 ```
 
 este paquete hoy (20 de julio de 2020) tinen problemas con file-loader@6, ajustar a fili-loader@5.1
+
+### Hydratar el state Inicial Redux
+
+Primero debemos obtener el state de store creado en el server, para inyectar en el html el initialState de la aplicaciín, ver [Redux server side rendering](https://redux.js.org/recipes/server-rendering)
+
+```
+const setResponse = (html, preloadedState) => {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PlatziVideo</title>
+
+        <link rel="stylesheet" href="assets/main.css" type="text/css" >
+      </head>
+      <body>
+        <div id="app">${html}</div>
+         <script>
+          // WARNING: See the following for security issues around embedding JSON in HTML:
+          // https://redux.js.org/recipes/server-rendering/#security-considerations
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+            /</g,
+            "\\u003c"
+          )}
+        </script>
+        <script src="assets/app.js" type="text/javascript" ></script>
+      </body>
+    </html>
+  `;
+};
+
+const renderApp = (req, res) => {
+  const store = createStore(reducer, initialState);
+  const preloadedState = store.getState();
+  const html = renderToString(
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={{}}>
+        {renderRoutes(routes)}
+      </StaticRouter>
+    </Provider>
+  );
+
+  res.send(setResponse(html, preloadedState));
+};
+```
+
+Luego en la aplicacion de react obtenemos el preloadedState y se lo pasamos al create store
+
+```
+const preloadedState = window.__PRELOADED_STATE__;
+const store = createStore(reducer, preloadedState, composeEnhancers());
+
+ReactDOM.hydrate(
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("app")
+);
+
+```
+
+#### Seguridad
+
+si vamos a la consola y colocamos _window.**PRELOADED_STATE**_ podemos acceder a el estado de la aplicacion y esto es un hueco de seguridad, para solucionarlo es muy sensillo despues de definir el preloadedState y el store lo unico que debemos hacer es un delete del _window.**PRELOADED_STATE**_
+
+```
+const preloadedState = window.__PRELOADED_STATE__;
+const store = createStore(reducer, preloadedState, composeEnhancers());
+
+delete window.__PRELOADED_STATE__;
+
+ReactDOM.hydrate(
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("app")
+);
+```
