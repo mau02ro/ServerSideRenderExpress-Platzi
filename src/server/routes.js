@@ -13,6 +13,7 @@ import { routes } from "../frontend/routes/serverRoutes";
 const setResponse = (html, preloadedState, manifest) => {
   const mainStyles = manifest ? manifest["main.css"] : "assets/main.css";
   const mainBuild = manifest ? manifest["main.js"] : "assets/main.js";
+  const vendorBuild = manifest ? manifest["vendors.js"] : "assets/vendor.js";
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -31,6 +32,7 @@ const setResponse = (html, preloadedState, manifest) => {
             "\\u003c"
           )}
         </script>
+        <script src=${vendorBuild} type="text/javascript" ></script>
         <script src=${mainBuild} type="text/javascript" ></script>
       </body>
     </html>
