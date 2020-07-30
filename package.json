@@ -4,10 +4,8 @@
   "description": "Proyecto del curso practico de react js - platzi",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development",
-    "start:server": "json-server initialState.json",
-    "start:dev": "nodemon src/server/index"
+    "build": "webpack-cli --config ./webpack.config.js",
+    "start:server": "json-server initialState.json"
   },
   "repository": {
     "type": "git",
@@ -24,6 +22,7 @@
     "asset-require-hook": "^1.2.0",
     "babel-eslint": "^10.1.0",
     "classnames": "^2.2.6",
+    "compression-webpack-plugin": "^4.0.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -31,6 +30,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "express": "^4.17.1",
+    "helmet": "^3.23.3",
     "history": "^5.0.0",
     "ignore-styles": "^5.0.1",
     "md5": "^2.2.1",
@@ -41,7 +41,8 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "webpack-manifest-plugin": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -50,13 +51,12 @@
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
     "file-loader": "5.1.0",
-    "html-loader": "^1.1.0",
-    "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
     "react-hot-loader": "^4.12.21",
     "sass-loader": "^9.0.1",
+    "terser-webpack-plugin": "^3.0.8",
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0",

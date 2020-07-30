@@ -12,6 +12,7 @@
   - [Redux](#Redux)
     - [Hidratar el state inicial Redux](#Hidratar-el-state-inicial-Redux)
     - [Seguridad](#Seguridad)
+- [Trabaja con entornos de desarrollo y producción](#Trabaja-con-entornos-de-desarrollo-y-producción)
 
 ## ¿Que es client side rendering?
 
@@ -295,4 +296,34 @@ ReactDOM.hydrate(
   </Provider>,
   document.getElementById("app")
 );
+```
+
+## Trabaja con entornos de desarrollo y producción
+
+- Debemos la carpeta publica de nuestro **bundle** de **webpack**
+
+```
+ app.use(express.static(`${__dirname}/public`));
+```
+
+- Usaremos [Helmet](https://helmetjs.github.io/) que es una forma de asegurar nuestro express con varios middelweares que nos van a ayudar a protejer nuestra aplicación.
+
+En este proyecto solo vamos a las configuraciones por defecto y [Cross-Domain-Policies](https://helmetjs.github.io/docs/crossdomain/)
+
+```
+//Aplicando Helmet
+app.use(helmet()); //todas las configuraciones pordefecto de htlmet
+app.use(helmet.permittedCrossDomainPolicies()); //activando Cross-Domain-Policies
+```
+
+- EL navegador puede obtener información desde el servidor del que nos estamos conectando es decir, sinos conectamos desde express el navegador puede saber estoy podría causar ciertos ataques dirigidos a ciertos frameworks o librerías que estemos utilizado, para evitar esto hay que deshabilitar la cabecera **x-powered-by**
+
+```
+app.disable("x-powered-by");
+```
+
+- Debemos ignorar la carpeta de **public** en el _.gitignore_
+
+```
+src/server/public
 ```

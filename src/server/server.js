@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import webpack from "webpack";
 import renderApp from "./routes";
+import helmet from "helmet";
+import getManifest from "./getManifest";
 
 dotenv.config();
 const { ENV, PORT } = process.env;
@@ -26,6 +28,20 @@ if (ENV === "development") {
 
   app.use(webpackDevMiddleware(compiler, serverConfig));
   app.use(webpackHotMiddleware(compiler));
+} else {
+  app.use((req, res, next) => {
+    if (!req.hashManifest) {
+      req.hashManifest = getManifest();
+    }
+    next();
+  });
+  //Configura la carpeta publica de nuestro bundle de webpack
+  app.use(express.static(`${__dirname}/public`));
+  //Aplicando Helmet
+  app.use(helmet()); //todas las configuraciones pordefecto de htlmet
+  app.use(helmet.permittedCrossDomainPolicies()); //activando Cross-Domain-Policies
+  //Deshabilitar
+  app.disable("x-powered-by");
 }
 
 app.get("*", renderApp);

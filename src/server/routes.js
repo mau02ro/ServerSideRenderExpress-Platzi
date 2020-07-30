@@ -10,7 +10,9 @@ import Layout from "../frontend/components/Layout";
 import { initialState } from "../frontend/initialState";
 import { routes } from "../frontend/routes/serverRoutes";
 
-const setResponse = (html, preloadedState) => {
+const setResponse = (html, preloadedState, manifest) => {
+  const mainStyles = manifest ? manifest["main.css"] : "assets/main.css";
+  const mainBuild = manifest ? manifest["main.js"] : "assets/main.js";
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -19,7 +21,7 @@ const setResponse = (html, preloadedState) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>PlatziVideo</title>
 
-        <link rel="stylesheet" href="assets/main.css" type="text/css" >
+        <link rel="stylesheet" href=${mainStyles} type="text/css" >
       </head>
       <body>
         <div id="app">${html}</div>
@@ -29,7 +31,7 @@ const setResponse = (html, preloadedState) => {
             "\\u003c"
           )}
         </script>
-        <script src="assets/app.js" type="text/javascript" ></script>
+        <script src=${mainBuild} type="text/javascript" ></script>
       </body>
     </html>
   `;
@@ -46,7 +48,7 @@ const renderApp = (req, res) => {
     </Provider>
   );
 
-  res.send(setResponse(html, preloadedState));
+  res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
 export default renderApp;
