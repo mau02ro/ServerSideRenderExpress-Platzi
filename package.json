@@ -22,7 +22,7 @@
     "asset-require-hook": "^1.2.0",
     "babel-eslint": "^10.1.0",
     "classnames": "^2.2.6",
-    "compression-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^4.0.1",
     "dotenv": "^8.2.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
