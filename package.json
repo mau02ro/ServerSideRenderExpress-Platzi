@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/mau02ro/cursoPractico-reactjs#readme",
   "dependencies": {
-    "@babel/register": "^7.10.5",
+    "@babel/register": "^7.12.13",
     "asset-require-hook": "^1.2.0",
     "babel-eslint": "^10.1.0",
     "classnames": "^2.2.6",
